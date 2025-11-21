@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./App.css";
+import RegistrationForm from "./RegistrationForm";
+import PostList from "./PostList";
+import ImageSearchImproved from "./ImageSearchImproved";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -26,11 +29,14 @@ function App() {
   return (
     <div className="App" style={{ textAlign: "center", padding: 24 }}>
       <h1>Мой To-Do List</h1>
+
       <form onSubmit={handleAddTodo}>
         <input
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
           placeholder="Введите задачу"
           style={{ padding: 8, width: "200px" }}
         />
@@ -60,6 +66,14 @@ function App() {
           </li>
         ))}
       </ul>
+
+      <div style={{ marginTop: 40 }}>
+        <RegistrationForm />
+      </div>
+      <div style={{ marginTop: 40 }}>
+        <PostList />
+      </div>
+      <ImageSearchImproved />
     </div>
   );
 }
