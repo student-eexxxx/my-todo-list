@@ -1,20 +1,20 @@
 import { useState } from "react";
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin, API_BASE, onClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch(`${API_BASE}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
       if (response.ok) {
-        onLogin(data.token);
+        onLogin(data.accessToken, data.refreshToken);
       } else {
         alert(data.error || "Ошибка входа");
       }
@@ -24,24 +24,81 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div style={{ border: "1px solid #ccc", padding: 20, borderRadius: 8, marginBottom: 20 }}>
-      <h2>Вход</h2>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        padding: 20,
+        borderRadius: 8,
+        marginBottom: 20,
+        maxWidth: "400px",
+        margin: "0 auto",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "15px",
+        }}
+      >
+        <h2 style={{ margin: 0 }}>Вход</h2>
+        <button
+          onClick={onClose}
+          style={{
+            background: "none",
+            border: "none",
+            fontSize: "24px",
+            cursor: "pointer",
+            color: "#666",
+          }}
+        >
+          ×
+        </button>
+      </div>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{ marginRight: 10, padding: 8, marginBottom: 10, display: "block" }}
+          style={{
+            padding: 10,
+            marginBottom: 10,
+            display: "block",
+            width: "100%",
+            boxSizing: "border-box",
+          }}
+          required
         />
         <input
           type="password"
           placeholder="Пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ marginRight: 10, padding: 8, marginBottom: 10, display: "block" }}
+          style={{
+            padding: 10,
+            marginBottom: 15,
+            display: "block",
+            width: "100%",
+            boxSizing: "border-box",
+          }}
+          required
         />
-        <button type="submit">Войти</button>
+        <button
+          type="submit"
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            width: "100%",
+          }}
+        >
+          Войти
+        </button>
       </form>
     </div>
   );
