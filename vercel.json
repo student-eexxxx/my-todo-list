@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://back-todo-4j0y.onrender.com"
+    }
+  ]
+}
