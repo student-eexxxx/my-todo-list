@@ -20,7 +20,7 @@ export default function PostList() {
     };
 
     fetchData();
-  }, []); // выполняется один раз при загрузке компонента
+  }, []);
 
   if (loading) {
     return <p>Загрузка постов...</p>;
